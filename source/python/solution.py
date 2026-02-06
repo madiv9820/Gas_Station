@@ -1,5 +1,5 @@
 from typing import List
 
-class Solutio(object):
+class pySolution(object):
     def py_canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
         return -1
