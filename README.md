@@ -23,16 +23,18 @@ cost = `[3,4,5,1,2]`
 - **Output:** `3`
 - **Explanation:** <br>
 We start at **station 3 (index 3)** and track the fuel step by step: <br>
-| Step | Action | Fuel in Tank |
-|------|--------|--------------|
-| ⛽ Start | Fill gas at station 3 → +4 | `4` |
-| 🚗 Move to station 4 | Spend 1, get +5 | `4 - 1 + 5 = 8` |
-| 🚗 Move to station 0 | Spend 2, get +1 | `8 - 2 + 1 = 7` |
-| 🚗 Move to station 1 | Spend 3, get +2 | `7 - 3 + 2 = 6` |
-| 🚗 Move to station 2 | Spend 4, get +3 | `6 - 4 + 3 = 5` |
-| 🔁 Return to station 3 | Spend 5 | `0` ✅ | <br><br>
-✅ The fuel never goes negative, and we successfully complete the circuit. <br>
-**Result:** `3`
+
+    | Step | Action | Fuel in Tank |
+    |------|--------|--------------|
+    | ⛽ Start | Fill gas at station 3 → +4 | `4` |
+    | 🚗 Move to station 4 | Spend 1, get +5 | `4 - 1 + 5 = 8` |
+    | 🚗 Move to station 0 | Spend 2, get +1 | `8 - 2 + 1 = 7` |
+    | 🚗 Move to station 1 | Spend 3, get +2 | `7 - 3 + 2 = 6` |
+    | 🚗 Move to station 2 | Spend 4, get +3 | `6 - 4 + 3 = 5` |
+    | 🔁 Return to station 3 | Spend 5 | `0` ✅ |
+    
+    ✅ The fuel never goes negative, and we successfully complete the circuit. <br>
+    **Result:** `3`
 
 ### 🔴 Example 2
 - **Input:** <br>
@@ -41,15 +43,17 @@ cost = `[3,4,3]`
 - **Output:** `-1`
 - **Explanation:** <br>
     - Starting at **station 0 or 1** ❌ — not enough fuel to reach the next station.
-    - Try **station 2:** <br>
-    | Step | Action | Fuel in Tank |
-|------|--------|--------------|
-| ⛽ Start | Fill gas at station 2 → +4 | `4` |
-| 🚗 Move to station 0 | Spend 3, get +2 | `4 - 3 + 2 = 3` |
-| 🚗 Move to station 1 | Spend 3, get +3 | `3 - 3 + 3 = 3` |
-| 🚫 Return to station 2 | Need 4 gas, have only 3 | ❌ | <br><br>
-❌ The circuit cannot be completed from any station. <br>
-**Result:** `-1`
+    - Try **station 2:**
+
+        | Step | Action | Fuel in Tank |
+        |------|--------|--------------|
+        | ⛽ Start | Fill gas at station 2 → +4 | `4` |
+        | 🚗 Move to station 0 | Spend 3, get +2 | `4 - 3 + 2 = 3` |
+        | 🚗 Move to station 1 | Spend 3, get +3 | `3 - 3 + 3 = 3` |
+        | 🚫 Return to station 2 | Need 4 gas, have only 3 | ❌ | 
+
+        ❌ The circuit cannot be completed from any station. <br>
+        **Result:** `-1`
 
 ### 📌 Constraints
 - 🔢 `n == gas.length == cost.length`
