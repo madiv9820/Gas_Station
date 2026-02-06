@@ -1,3 +1,6 @@
+#ifndef SOLUTION_H
+#define SOLUTION_H
+
 #include <vector>
 using namespace std;
 
@@ -7,3 +10,5 @@ public:
         return -1;
     }
 };
+
+#endif
