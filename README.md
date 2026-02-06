@@ -1,62 +1,72 @@
-# [Gas Station ⛽️](https://leetcode.com/problems/gas-station/description/?envType=study-plan-v2&envId=top-interview-150)
+## ⚡ Greedy O(n) Approach
+### 🧠 Key Insight
+Before choosing *where* to start, we first answer a more important question: <br>
+*Is completing the circuit even possible?*
 
-You’re driving on a **circular route** with `n` **gas stations**.
-- ⛽ `gas[i]` → how much fuel you get at station i
-- 🔥 `cost[i]` → fuel needed to go from station i to the next station *(i + 1)*
+If the **total gas available** is less than the **total cost required**, then no starting station can ever work — no matter how clever the strategy 🚫⛽.
 
-You:
-- Start with an **empty tank**
-- Can choose **any one station** as the starting point
-- Have an **unlimited tank size**
+### 💡 Strategy Explaination
 
-### 🎯 Goal
+This solution uses a **single-pass greedy approach** that efficiently finds the valid starting station.
 
-Find the **index of the gas station** from which you can complete **one full круг (circle)** without running out of fuel.
-- ✅ If it’s possible, return the **starting station index**
-- ❌ If it’s not possible from any station, return `-1`
-- 🧠 If a solution exists, it’s **guaranteed to be unique**
+- #### 🔍 Step 1: Global Feasibility Check
+    We compare:
+    - ⛽ `totalGas = sum(gas)`
+    - 💸 `totalCost = sum(cost)`
+    - If: `totalGas < totalCost`, ➡️ return `-1` immediately.
 
-### 🟢 Example 1
-- **Input:** <br>
-gas  = `[1,2,3,4,5]`
-cost = `[3,4,5,1,2]`
-- **Output:** `3`
-- **Explanation:** <br>
-We start at **station 3 (index 3)** and track the fuel step by step: <br>
+    This eliminates impossible cases early and saves computation time.
 
-    | Step | Action | Fuel in Tank |
-    |------|--------|--------------|
-    | ⛽ Start | Fill gas at station 3 → +4 | `4` |
-    | 🚗 Move to station 4 | Spend 1, get +5 | `4 - 1 + 5 = 8` |
-    | 🚗 Move to station 0 | Spend 2, get +1 | `8 - 2 + 1 = 7` |
-    | 🚗 Move to station 1 | Spend 3, get +2 | `7 - 3 + 2 = 6` |
-    | 🚗 Move to station 2 | Spend 4, get +3 | `6 - 4 + 3 = 5` |
-    | 🔁 Return to station 3 | Spend 5 | `0` ✅ |
+- #### 🚗 Step 2: Single-Pass Traversal
+    Once feasibility is confirmed, we simulate the journey **only once**.
+
+    We maintain:
+    - 🚦 `startPosition` — the current candidate starting station
+    - 🔋 `currentFuel` — fuel left while traveling from `startPosition`
+
+    As we move station by station:
+    1. ⛽ Add gas from the current station
+    2. 💸 Check if we can reach the next station
+    3. ❌ If fuel drops below zero:
+        - The current segment is invalid
+        - All stations between the previous start and this station are discarded
+        - The next station becomes the new candidate start
+        - Fuel is reset
+
+    This greedy reset works because:
     
-    ✅ The fuel never goes negative, and we successfully complete the circuit. <br>
-    **Result:** `3`
+    If you cannot reach station `i + 1` from your current start, then **no station before** `i` **can be a valid start either**.
 
-### 🔴 Example 2
-- **Input:** <br>
-gas  = `[2,3,4]` <br>
-cost = `[3,4,3]`
-- **Output:** `-1`
-- **Explanation:** <br>
-    - Starting at **station 0 or 1** ❌ — not enough fuel to reach the next station.
-    - Try **station 2:**
+### 🎯 Why the Greedy Reset Works
+- Any fuel gained before the failure point is already insufficient
+- Starting earlier would only make the fuel situation worse
+- Skipping ahead is safe and optimal
 
-        | Step | Action | Fuel in Tank |
-        |------|--------|--------------|
-        | ⛽ Start | Fill gas at station 2 → +4 | `4` |
-        | 🚗 Move to station 0 | Spend 3, get +2 | `4 - 3 + 2 = 3` |
-        | 🚗 Move to station 1 | Spend 3, get +3 | `3 - 3 + 3 = 3` |
-        | 🚫 Return to station 2 | Need 4 gas, have only 3 | ❌ | 
+This guarantees correctness while keeping the solution fast.
 
-        ❌ The circuit cannot be completed from any station. <br>
-        **Result:** `-1`
+### 📊 Complexity Analysis
+- **⏱️ Time Complexity:** `O(n)`
+    - Why?
+        - One pass to check feasibility
+        - One pass to find the valid starting station
 
-### 📌 Constraints
-- 🔢 `n == gas.length == cost.length`
-- 📏 `1 ≤ n ≤ 10⁵`
-- ⛽ `0 ≤ gas[i], cost[i] ≤ 10⁴`
-- 🎯 The input is generated such that the **answer is unique**
+- **📦 Space Complexity:** `O(1)`
+    - Why? 
+        - No extra data structures
+        - Only constant variables used
+
+### 🆚 Comparison with Brute-Force
+| **Approach**      | **Time Complexity** | **Space Complexity** | **Notes**                    |
+| ------------- | --------------- | ---------------- | ------------------------ |
+| Brute-force   | O(n²)           | O(1)             | Easy to understand, slow |
+| Greedy (this) | O(n)            | O(1)             | Optimal, interview-ready |
+
+### 🏁 Final Thoughts
+This greedy solution:
+- 🚀 Scales efficiently for large inputs
+- 🧠 Demonstrates strong problem-solving intuition
+- ✅ Is the optimal approach expected in interviews
+
+Think of it as: *Fail fast, skip smart, and finish strong.*
+
+--- 
