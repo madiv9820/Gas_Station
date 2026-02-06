@@ -60,3 +60,12 @@ cost = `[3,4,3]`
 - 📏 `1 ≤ n ≤ 10⁵`
 - ⛽ `0 ≤ gas[i], cost[i] ≤ 10⁴`
 - 🎯 The input is generated such that the **answer is unique**
+
+## 🛠️ Implementations Overview
+- ### [🔍 Simulation / Brute-Force Approach](https://github.com/madiv9820/Gas_Station/tree/Approach_01-Brute_Force)
+    A straightforward, step-by-step simulation that closely follows the actual journey, making the logic easier to visualize and understand.
+
+- ### [🧠 Greedy Approach](https://github.com/madiv9820/Gas_Station/tree/Approach_02-Greedy)
+    An optimal, single-pass solution that uses key observations to efficiently find the answer with minimal time and space.
+
+---
