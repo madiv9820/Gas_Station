@@ -1,6 +1,6 @@
 import unittest
 from timeout_decorator import timeout
-from source.py.solution import pySolution
+from source.python.solution import pySolution
 
 class test_py_Solution(unittest.TestCase):
     def setUp(self):
