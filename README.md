@@ -1,62 +1,72 @@
-# [Gas Station ⛽️](https://leetcode.com/problems/gas-station/description/?envType=study-plan-v2&envId=top-interview-150)
+## Brute-Force Simulation (Baseline Solution) 💡
+This solution takes a **straightforward and honest approach**: <br>
+*👉 Try starting from every gas station and simulate the full journey.*
 
-You’re driving on a **circular route** with `n` **gas stations**.
-- ⛽ `gas[i]` → how much fuel you get at station i
-- 🔥 `cost[i]` → fuel needed to go from station i to the next station *(i + 1)*
+### 🔁 How it works
+For each station `i`:
+1. ⛽ Start with the gas available at station `i`
+2. 🚗 Move to the next station in a circular manner
+3. 🔄 At every step:
+    - Check if there is enough fuel to travel to the next station
+    - Deduct the travel cost
+    - Add gas from the new station
+4. 🛑 If fuel ever drops below zero → abort this start position
+5. 🏁 If you return back to the starting station successfully → we found the answer
 
-You:
-- Start with an **empty tank**
-- Can choose **any one station** as the starting point
-- Have an **unlimited tank size**
+This process repeats until:
+- a valid starting station is found ✅
+- or all stations fail ❌
 
-### 🎯 Goal
+### 🎡 Circular Route Handling
+Since the stations form a **circle**, modulo arithmetic is used: <br>
+`next_station = (current_station + 1) % n`
 
-Find the **index of the gas station** from which you can complete **one full круг (circle)** without running out of fuel.
-- ✅ If it’s possible, return the **starting station index**
-- ❌ If it’s not possible from any station, return `-1`
-- 🧠 If a solution exists, it’s **guaranteed to be unique**
+This ensures we:
+- wrap from the last station back to the first
+- never go out of bounds
+- keep the traversal clean and intuitive
 
-### 🟢 Example 1
-- **Input:** <br>
-gas  = `[1,2,3,4,5]`
-cost = `[3,4,5,1,2]`
-- **Output:** `3`
-- **Explanation:** <br>
-We start at **station 3 (index 3)** and track the fuel step by step: <br>
+### 📊 Complexity Analysis
+- **⏱️ Time Complexity:** `O(n²)`
+    - Why?
+        - We try up to `n` starting stations
+        - For each start, we may traverse up to n stations in the worst case
 
-    | Step | Action | Fuel in Tank |
-    |------|--------|--------------|
-    | ⛽ Start | Fill gas at station 3 → +4 | `4` |
-    | 🚗 Move to station 4 | Spend 1, get +5 | `4 - 1 + 5 = 8` |
-    | 🚗 Move to station 0 | Spend 2, get +1 | `8 - 2 + 1 = 7` |
-    | 🚗 Move to station 1 | Spend 3, get +2 | `7 - 3 + 2 = 6` |
-    | 🚗 Move to station 2 | Spend 4, get +3 | `6 - 4 + 3 = 5` |
-    | 🔁 Return to station 3 | Spend 5 | `0` ✅ |
-    
-    ✅ The fuel never goes negative, and we successfully complete the circuit. <br>
-    **Result:** `3`
+    This is acceptable as a baseline but not optimal for large inputs.
+- **📦 Space Complexity:** `O(1)`
+    - Why?
+        - No extra data structures are used
+        - Only a few variables to track fuel and positions
 
-### 🔴 Example 2
-- **Input:** <br>
-gas  = `[2,3,4]` <br>
-cost = `[3,4,3]`
-- **Output:** `-1`
-- **Explanation:** <br>
-    - Starting at **station 0 or 1** ❌ — not enough fuel to reach the next station.
-    - Try **station 2:**
+### 🧪 Why This Approach Is Useful
+Even though it’s not optimal, this solution is valuable because:
+- ✅ Easy to understand and reason about
+- 🧠 Clearly demonstrates the mechanics of the problem
+- 🧪 Acts as a reference implementation
+- 🚀 Makes it easier to validate and trust future optimized solutions
 
-        | Step | Action | Fuel in Tank |
-        |------|--------|--------------|
-        | ⛽ Start | Fill gas at station 2 → +4 | `4` |
-        | 🚗 Move to station 0 | Spend 3, get +2 | `4 - 3 + 2 = 3` |
-        | 🚗 Move to station 1 | Spend 3, get +3 | `3 - 3 + 3 = 3` |
-        | 🚫 Return to station 2 | Need 4 gas, have only 3 | ❌ | 
+Think of it as:
+*“First make it work, then make it fast.”*
 
-        ❌ The circuit cannot be completed from any station. <br>
-        **Result:** `-1`
+### 🔜 What’s Next?
+An optimized **O(n) greedy solution** exists that:
+- skips impossible starting positions
+- solves the problem in a single pass
 
-### 📌 Constraints
-- 🔢 `n == gas.length == cost.length`
-- 📏 `1 ≤ n ≤ 10⁵`
-- ⛽ `0 ≤ gas[i], cost[i] ≤ 10⁴`
-- 🎯 The input is generated such that the **answer is unique**
+This brute-force solution lays **the conceptual foundation** for that optimization.
+
+### 🏁 Final Thoughts
+
+This implementation focuses on:
+- clarity 🧼
+- correctness ✅
+- learning value 🧠
+
+Perfect for:
+- interview preparation
+- algorithm understanding
+- building intuition before optimization
+
+🚗💨 Onwards to the greedy solution!
+
+---
